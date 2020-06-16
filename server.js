@@ -24,17 +24,14 @@ app.use("/api/nomics/currencies/ticker", async (req, res) => {
   const baseUrl = 'https://api.nomics.com/v1';
 
   try {
-    const resp = await axios.get(`${baseUrl}/currencies/ticker`, config)
-      .then(response => {
-        const { data } = response;
-        const coins = data;
-        const coinsList = coins.slice([0], [10]).map((item, i) => {
-          // console.log(item);
-          return item;
-        });
-        // res.send(coinsList)
-        res.json(coinsList)
-      })
+    const response = await axios.get(`${baseUrl}/currencies/ticker`, config)
+    let data = await response.data
+    const coins = data
+    const coinsList = coins.slice([0], [10]).map((item, i) => {
+      console.log(item);
+      return item;
+    });
+    res.send(coinsList)
   } catch (error) {
     console.error("Your ERROR: ", error)
   }
