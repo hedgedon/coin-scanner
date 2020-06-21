@@ -15,8 +15,11 @@ router.get("/currencies/ticker", async (req, res) => {
     const response = await axios.get(`${baseUrl}/currencies/ticker`, config)
     let data = await response.data
     const coins = data
-    const coinsList = coins.slice([0], [10]).map((item) => {
-      // console.log(items);
+    // const coinsList = coins.slice([0], [10]).map()
+    const coinsList = coins.map((item) => {
+      // console.log(items)
+      // const { id, rank, name, price, market_cap } = item;
+      // return { id, rank, name, price, market_cap };
       return item;
     });
     res.send(coinsList)
