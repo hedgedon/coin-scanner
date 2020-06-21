@@ -16,7 +16,7 @@ router.get("/currencies/ticker", async (req, res) => {
     let data = await response.data
     const coins = data
     const coinsList = coins.slice([0], [10]).map((item) => {
-      // console.log(item);
+      // console.log(items);
       return item;
     });
     res.send(coinsList)
