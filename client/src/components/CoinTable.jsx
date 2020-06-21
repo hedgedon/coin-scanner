@@ -21,16 +21,15 @@ const CoinTable = ({ data }) => {
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {data.map((coin) => {
-          return (
-            <Table.Row key={coin.id}>
-              <Table.Cell>{coin.rank}</Table.Cell>
-              <Table.Cell>{coin.name}</Table.Cell>
-              <Table.Cell textAlign="left">{coin.price}</Table.Cell>
-              <Table.Cell>${coin.market_cap}</Table.Cell>
+        {data.map(({ id, rank, name, price, market_cap }) => (
+            <Table.Row key={id}>
+              <Table.Cell>{rank}</Table.Cell>
+              <Table.Cell>{name}</Table.Cell>
+              <Table.Cell textAlign="left">{price}</Table.Cell>
+              <Table.Cell>${market_cap}</Table.Cell>
             </Table.Row>
           )
-        })}
+        )}
       </Table.Body>
     </Table>
   );
