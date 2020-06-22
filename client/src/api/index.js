@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'http://localhost:5000/nomics/currencies/ticker';
+const url = 'http://localhost:5000/coingecko/coins/markets';
 
 export const fetchData = async () => {
   try {
@@ -11,7 +11,7 @@ export const fetchData = async () => {
     // Instant return of an object instead.
     const modifiedData = data.map((coins) => {
       // console.log(coins) //  ===> 0: {id: "BTC", currency: "BTC", symbol: "BTC", name: "Bitcoin", … }
-      return coins
+      return coins;
     })
 
     return modifiedData;

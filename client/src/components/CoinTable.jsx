@@ -19,16 +19,18 @@ const CoinTable = ({ data }) => {
           <Table.HeaderCell textAlign="left">Price</Table.HeaderCell>
           <Table.HeaderCell>Market Cap</Table.HeaderCell>
           <Table.HeaderCell>High</Table.HeaderCell>
+          <Table.HeaderCell>Price % Change (24h)</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
       <Table.Body>
-        {data.map(({ id, rank, name, price, market_cap, high }) => (
+        {data.map(({ id, market_cap_rank, name, current_price, market_cap, high, price_change_percentage_24h }) => (
             <Table.Row key={id}>
-              <Table.Cell>{rank}</Table.Cell>
+              <Table.Cell>{market_cap_rank}</Table.Cell>
               <Table.Cell>{name}</Table.Cell>
-              <Table.Cell textAlign="left">{price}</Table.Cell>
+              <Table.Cell textAlign="left">{current_price}</Table.Cell>
               <Table.Cell>${market_cap}</Table.Cell>
               <Table.Cell>${high}</Table.Cell>
+              <Table.Cell>{price_change_percentage_24h}%</Table.Cell>
             </Table.Row>
           )
         )}
