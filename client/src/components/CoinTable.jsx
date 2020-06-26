@@ -5,7 +5,7 @@ const CoinTable = ({ data }) => {
   // loading..
   if (data.length === 0) {
     console.log('loading', new Date().toLocaleString())
-    return 'loading ...'
+    return "Loading..."
   }
 
   console.log(data, new Date().toLocaleString())

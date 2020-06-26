@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 
-import CoinTable from './components/CoinTable'
-import { Container } from 'semantic-ui-react'
+import { Container } from 'semantic-ui-react';
+
+import CoinTable from './components/CoinTable';
+import Cards from './components/Cards';
 
 import { fetchData } from './api';
 
@@ -12,7 +14,6 @@ class App extends Component {
 
   async componentDidMount() {
     const fetchedData = await fetchData();
-    // console.log(fetchedData)
     this.setState({ data: fetchedData })
   }
 
@@ -21,6 +22,7 @@ class App extends Component {
     // console.log(data)
     return (
       <Container>
+        <Cards />
         <CoinTable data={data} />
       </Container>
     );
