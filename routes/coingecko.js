@@ -30,7 +30,7 @@ router.get("/derivatives/exchanges", async(req, res) => {
     const exchanges = response.data
 
     // from the API, return only id and name
-    const filteredExchanges = exchanges.slice([0], [8]).map(({ name, id, trade_volume_24h_btc, open_interest_btc, url }) => {
+    const filteredExchanges = exchanges.slice([0], [7]).map(({ name, id, trade_volume_24h_btc, open_interest_btc, url }) => {
       return { name, id, trade_volume_24h_btc, open_interest_btc, url }
     });
     res.send(filteredExchanges);

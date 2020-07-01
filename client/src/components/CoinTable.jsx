@@ -1,27 +1,90 @@
 import React from "react";
 import { Table } from "semantic-ui-react";
 
+import { HorizontalBar } from "react-chartjs-2";
+import { Container, Divider, Grid, Header, Image } from "semantic-ui-react";
+
 const CoinTable = ({ marketData, exchangeData }) => {
   // loading..
-  if ((marketData.length === 0) && (exchangeData.length === 0)) {
-    console.log('loading', new Date().toLocaleString())
-    return (
-      <div className="ui active centered inline loader"></div>
-    )
+  if (marketData.length === 0 && exchangeData.length === 0) {
+    console.log("loading", new Date().toLocaleString());
+    return <div className="ui active centered inline loader"></div>;
   }
 
-  // console.log(marketData, new Date().toLocaleString())
+  // TODO:
+  // pass `name` to labels. by mapping over our exchangeData array and destructure out the `name`
+  // return an array
+  // transform volume to current dollar value in $billion (prob should handle this server side)
+  const labels = exchangeData.map(({ name }) => name);
+  const volumes = exchangeData.map(
+    ({ trade_volume_24h_btc }) => trade_volume_24h_btc
+  );
+
+  // chart data
+  const dataSets = [
+    {
+      label: "24h Volume (BTC)",
+      backgroundColor: "rgba(255,99,132,0.2)",
+      borderColor: "rgba(255,99,132,1)",
+      borderWidth: 1,
+      hoverBackgroundColor: "rgba(255,99,132,0.4)",
+      hoverBorderColor: "rgba(255,99,132,1)",
+      data: volumes,
+    },
+  ];
+
+  // chart options
+  const options = {
+    scales: {
+      yAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: "Derivatives Exchanges",
+          },
+        },
+      ],
+    },
+  };
+
+  // chart data
+  const data = {
+    labels: labels,
+    datasets: dataSets,
+  };
+
+  // creates rows for each coin
+  const marketDataRowContent = marketData.map(
+    ({
+      id,
+      market_cap_rank,
+      name,
+      current_price,
+      market_cap,
+      high,
+      price_change_percentage_24h,
+    }) => (
+      <Table.Row key={id}>
+        <Table.Cell>{market_cap_rank}</Table.Cell>
+        <Table.Cell>{name}</Table.Cell>
+        <Table.Cell textAlign="left">{current_price}</Table.Cell>
+        <Table.Cell>${market_cap}</Table.Cell>
+        <Table.Cell>${high}</Table.Cell>
+        <Table.Cell>{price_change_percentage_24h}%</Table.Cell>
+      </Table.Row>
+    )
+  );
 
   return (
-    <div>
-      <ul>
-        {
-          exchangeData.map(({ id, name, trade_volume_24h_btc, open_interest_btc }) => { 
-            return <li key={id}>{name} | 24h volume (btc): {trade_volume_24h_btc} || open interest: {open_interest_btc} </li> 
-          })
-        }
-      </ul>
-      {console.log(exchangeData)}
+    <Grid>
+      <Grid.Row columns={2} textAlign="center">
+        <Grid.Column>
+          <HorizontalBar data={data} options={options} />
+        </Grid.Column>
+        <Grid.Column>
+          <HorizontalBar data={data} options={options} />
+        </Grid.Column>
+      </Grid.Row>
       <Table unstackable>
         <Table.Header>
           <Table.Row>
@@ -33,22 +96,10 @@ const CoinTable = ({ marketData, exchangeData }) => {
             <Table.HeaderCell>Price % Change (24h)</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
-        <Table.Body>
-          {marketData.map(({ id, market_cap_rank, name, current_price, market_cap, high, price_change_percentage_24h }) => (
-              <Table.Row key={id}>
-                <Table.Cell>{market_cap_rank}</Table.Cell>
-                <Table.Cell>{name}</Table.Cell>
-                <Table.Cell textAlign="left">{current_price}</Table.Cell>
-                <Table.Cell>${market_cap}</Table.Cell>
-                <Table.Cell>${high}</Table.Cell>
-                <Table.Cell>{price_change_percentage_24h}%</Table.Cell>
-              </Table.Row>
-            )
-          )}
-        </Table.Body>
+        <Table.Body>{marketDataRowContent}</Table.Body>
       </Table>
-    </div>
+    </Grid>
   );
-}
+};
 
 export default CoinTable;

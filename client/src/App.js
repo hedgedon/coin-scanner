@@ -15,7 +15,6 @@ class App extends Component {
   async componentDidMount() {
     const fetchedMarketData = await fetchMarketData();
     const fetchedExchangeData = await fetchExchangeData();
-    // this.setState({ marketData: [...this.state.marketData, fetchedMarketData], exchangeData: [...this.state.exchangeData, fetchedExchangeData] });
     this.setState({ marketData: fetchedMarketData, exchangeData: fetchedExchangeData });
     // console.log(this.state.exchangeData)
   }
