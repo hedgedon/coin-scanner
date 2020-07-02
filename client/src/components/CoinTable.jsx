@@ -1,8 +1,10 @@
 import React from "react";
 import { Table } from "semantic-ui-react";
 
-import { HorizontalBar } from "react-chartjs-2";
-import { Container, Divider, Grid, Header, Image } from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
+
+import VolumeChart from "./VolumeChart";
+import OpenInterestChart from "./OpenInterestChart";
 
 const CoinTable = ({ marketData, exchangeData }) => {
   // loading..
@@ -11,29 +13,9 @@ const CoinTable = ({ marketData, exchangeData }) => {
     return <div className="ui active centered inline loader"></div>;
   }
 
-  // TODO:
-  // pass `name` to labels. by mapping over our exchangeData array and destructure out the `name`
-  // return an array
-  // transform volume to current dollar value in $billion (prob should handle this server side)
   const labels = exchangeData.map(({ name }) => name);
-  const volumes = exchangeData.map(
-    ({ trade_volume_24h_btc }) => trade_volume_24h_btc
-  );
 
-  // chart data
-  const dataSets = [
-    {
-      label: "24h Volume (BTC)",
-      backgroundColor: "rgba(255,99,132,0.2)",
-      borderColor: "rgba(255,99,132,1)",
-      borderWidth: 1,
-      hoverBackgroundColor: "rgba(255,99,132,0.4)",
-      hoverBorderColor: "rgba(255,99,132,1)",
-      data: volumes,
-    },
-  ];
-
-  // chart options
+  // chart options (24h Volume Chart & Open Interest)
   const options = {
     scales: {
       yAxes: [
@@ -45,12 +27,6 @@ const CoinTable = ({ marketData, exchangeData }) => {
         },
       ],
     },
-  };
-
-  // chart data
-  const data = {
-    labels: labels,
-    datasets: dataSets,
   };
 
   // creates rows for each coin
@@ -76,15 +52,25 @@ const CoinTable = ({ marketData, exchangeData }) => {
   );
 
   return (
-    <Grid>
-      <Grid.Row columns={2} textAlign="center">
-        <Grid.Column>
-          <HorizontalBar data={data} options={options} />
-        </Grid.Column>
-        <Grid.Column>
-          <HorizontalBar data={data} options={options} />
-        </Grid.Column>
-      </Grid.Row>
+    <div>
+      <Grid>
+        <Grid.Row columns={2} textAlign="center">
+          <Grid.Column>
+            <VolumeChart
+              exchangeData={exchangeData}
+              options={options}
+              labels={labels}
+            />
+          </Grid.Column>
+          <Grid.Column>
+            <OpenInterestChart
+              exchangeData={exchangeData}
+              options={options}
+              labels={labels}
+            />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
       <Table unstackable>
         <Table.Header>
           <Table.Row>
@@ -98,7 +84,7 @@ const CoinTable = ({ marketData, exchangeData }) => {
         </Table.Header>
         <Table.Body>{marketDataRowContent}</Table.Body>
       </Table>
-    </Grid>
+    </div>
   );
 };
 
