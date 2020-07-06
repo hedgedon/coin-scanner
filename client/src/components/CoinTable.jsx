@@ -33,19 +33,23 @@ const CoinTable = ({ marketData, exchangeData }) => {
   const marketDataRowContent = marketData.map(
     ({
       id,
+      symbol,
       market_cap_rank,
       name,
       current_price,
       market_cap,
-      high,
+      high_24h,
+      low_24h,
       price_change_percentage_24h,
     }) => (
       <Table.Row key={id}>
         <Table.Cell>{market_cap_rank}</Table.Cell>
+        <Table.Cell>{symbol.toUpperCase()}</Table.Cell>
         <Table.Cell>{name}</Table.Cell>
-        <Table.Cell textAlign="left">{current_price}</Table.Cell>
+        <Table.Cell>${current_price}</Table.Cell>
         <Table.Cell>${market_cap}</Table.Cell>
-        <Table.Cell>${high}</Table.Cell>
+        <Table.Cell>${high_24h}</Table.Cell>
+        <Table.Cell>${low_24h}</Table.Cell>
         <Table.Cell>{price_change_percentage_24h}%</Table.Cell>
       </Table.Row>
     )
@@ -75,11 +79,13 @@ const CoinTable = ({ marketData, exchangeData }) => {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>#</Table.HeaderCell>
-            <Table.HeaderCell>Name</Table.HeaderCell>
-            <Table.HeaderCell textAlign="left">Price</Table.HeaderCell>
+            <Table.HeaderCell>Symbol</Table.HeaderCell>
+            <Table.HeaderCell>Asset</Table.HeaderCell>
+            <Table.HeaderCell>Price</Table.HeaderCell>
             <Table.HeaderCell>Market Cap</Table.HeaderCell>
-            <Table.HeaderCell>High</Table.HeaderCell>
-            <Table.HeaderCell>Price % Change (24h)</Table.HeaderCell>
+            <Table.HeaderCell>24h High</Table.HeaderCell>
+            <Table.HeaderCell>24h Low</Table.HeaderCell>
+            <Table.HeaderCell>24h % Change</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>{marketDataRowContent}</Table.Body>
