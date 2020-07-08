@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import style from "./App.module.css";
+import "./App.module.css";
 
 import { Container } from "semantic-ui-react";
 import CoinTable from "./components/CoinTable";
