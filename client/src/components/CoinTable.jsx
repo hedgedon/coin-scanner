@@ -1,7 +1,7 @@
 import React from "react";
 import { Table } from "semantic-ui-react";
 
-import { Grid } from "semantic-ui-react";
+import { Grid, Image } from "semantic-ui-react";
 
 import VolumeChart from "./VolumeChart";
 import OpenInterestChart from "./OpenInterestChart";
@@ -15,6 +15,8 @@ const CoinTable = ({ marketData, exchangeData }) => {
 
   const labels = exchangeData.map(({ name }) => name);
 
+  // TODO:
+  // move options into separate charts since we will be using diff kinda style on different charts
   // chart options (24h Volume Chart & Open Interest)
   const options = {
     scales: {
@@ -23,9 +25,25 @@ const CoinTable = ({ marketData, exchangeData }) => {
           scaleLabel: {
             display: true,
             labelString: "Derivatives Exchanges",
+            fontColor: "red",
+          },
+          ticks: {
+            fontColor: "yellow",
           },
         },
       ],
+      xAxes: [
+        {
+          ticks: {
+            fontColor: "green",
+          },
+        },
+      ],
+    },
+    legend: {
+      labels: {
+        fontColor: "white",
+      },
     },
   };
 
@@ -33,6 +51,7 @@ const CoinTable = ({ marketData, exchangeData }) => {
   const marketDataRowContent = marketData.map(
     ({
       id,
+      image,
       symbol,
       market_cap_rank,
       name,
@@ -44,7 +63,10 @@ const CoinTable = ({ marketData, exchangeData }) => {
     }) => (
       <Table.Row key={id}>
         <Table.Cell>{market_cap_rank}</Table.Cell>
-        <Table.Cell>{symbol.toUpperCase()}</Table.Cell>
+        <Table.Cell>
+          <Image src={image} avatar />
+          {symbol.toUpperCase()}
+        </Table.Cell>
         <Table.Cell>{name}</Table.Cell>
         <Table.Cell>${current_price}</Table.Cell>
         <Table.Cell>${market_cap}</Table.Cell>

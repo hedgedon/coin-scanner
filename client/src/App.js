@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import style from "./App.module.css";
+
 import { Container } from "semantic-ui-react";
 import CoinTable from "./components/CoinTable";
 
@@ -25,7 +27,7 @@ class App extends Component {
     const { marketData, exchangeData } = this.state;
 
     return (
-      <Container>
+      <Container className="style">
         <CoinTable marketData={marketData} exchangeData={exchangeData} />
       </Container>
     );
