@@ -1,31 +1,59 @@
 import React from "react";
 
-import { HorizontalBar } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 
-const OpenInterestChart = ({ exchangeData, options, labels }) => {
+const OpenInterestChart = ({ exchangeData }) => {
   const openInterest = exchangeData.map(
     ({ open_interest_btc }) => open_interest_btc
   );
 
-  const dataSets = [
-    {
-      label: "24h Open Interest (BTC)",
-      backgroundColor: "rgba(0,246,255,0.2)",
-      borderColor: "rgba(0,246,255,1)",
-      borderWidth: 1,
-      hoverBackgroundColor: "rgba(255,99,132,0.4)",
-      hoverBorderColor: "rgba(255,99,132,1)",
-      data: openInterest,
-    },
-  ];
+  const labels = exchangeData.map(({ name }) => name);
 
-  // chart data
   const data = {
     labels: labels,
-    datasets: dataSets,
+    datasets: [
+      {
+        label: "24h Open Interest (BTC)",
+        backgroundColor: "rgba(0,246,255,0.2)",
+        borderColor: "rgba(0,246,255,1)",
+        borderWidth: 1,
+        hoverBackgroundColor: "rgba(255,99,132,0.4)",
+        hoverBorderColor: "rgba(255,99,132,1)",
+        data: openInterest,
+      },
+    ],
   };
 
-  return <HorizontalBar data={data} options={options} />;
+  const options = {
+    scales: {
+      yAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: "Derivatives Exchanges",
+            fontColor: "blue",
+          },
+          ticks: {
+            fontColor: "#F0F4F8", //gray
+          },
+        },
+      ],
+      xAxes: [
+        {
+          ticks: {
+            fontColor: "#F0F4F8",
+          },
+        },
+      ],
+    },
+    legend: {
+      labels: {
+        fontColor: "white",
+      },
+    },
+  };
+
+  return <Bar data={data} options={options} />;
 };
 
 export default OpenInterestChart;

@@ -1,5 +1,7 @@
 import React from "react";
-import { Table } from "semantic-ui-react";
+// import { Table } from "semantic-ui-react";
+
+import { StyledTable } from "./styledComponents";
 
 import { Grid, Image } from "semantic-ui-react";
 
@@ -15,38 +17,6 @@ const CoinTable = ({ marketData, exchangeData }) => {
 
   const labels = exchangeData.map(({ name }) => name);
 
-  // TODO:
-  // move options into separate charts since we will be using diff kinda style on different charts
-  // chart options (24h Volume Chart & Open Interest)
-  const options = {
-    scales: {
-      yAxes: [
-        {
-          scaleLabel: {
-            display: true,
-            labelString: "Derivatives Exchanges",
-            fontColor: "red",
-          },
-          ticks: {
-            fontColor: "yellow",
-          },
-        },
-      ],
-      xAxes: [
-        {
-          ticks: {
-            fontColor: "green",
-          },
-        },
-      ],
-    },
-    legend: {
-      labels: {
-        fontColor: "white",
-      },
-    },
-  };
-
   // creates rows for each coin
   const marketDataRowContent = marketData.map(
     ({
@@ -61,19 +31,19 @@ const CoinTable = ({ marketData, exchangeData }) => {
       low_24h,
       price_change_percentage_24h,
     }) => (
-      <Table.Row key={id}>
-        <Table.Cell>{market_cap_rank}</Table.Cell>
-        <Table.Cell>
+      <StyledTable.Row key={id}>
+        <StyledTable.Cell>{market_cap_rank}</StyledTable.Cell>
+        <StyledTable.Cell>
           <Image src={image} avatar />
           {symbol.toUpperCase()}
-        </Table.Cell>
-        <Table.Cell>{name}</Table.Cell>
-        <Table.Cell>${current_price}</Table.Cell>
-        <Table.Cell>${market_cap}</Table.Cell>
-        <Table.Cell>${high_24h}</Table.Cell>
-        <Table.Cell>${low_24h}</Table.Cell>
-        <Table.Cell>{price_change_percentage_24h}%</Table.Cell>
-      </Table.Row>
+        </StyledTable.Cell>
+        <StyledTable.Cell>{name}</StyledTable.Cell>
+        <StyledTable.Cell>${current_price}</StyledTable.Cell>
+        <StyledTable.Cell>${market_cap}</StyledTable.Cell>
+        <StyledTable.Cell>${high_24h}</StyledTable.Cell>
+        <StyledTable.Cell>${low_24h}</StyledTable.Cell>
+        <StyledTable.Cell>{price_change_percentage_24h}%</StyledTable.Cell>
+      </StyledTable.Row>
     )
   );
 
@@ -82,36 +52,29 @@ const CoinTable = ({ marketData, exchangeData }) => {
       <Grid>
         <Grid.Row columns={2} textAlign="center">
           <Grid.Column>
-            <VolumeChart
-              exchangeData={exchangeData}
-              options={options}
-              labels={labels}
-            />
+            <VolumeChart exchangeData={exchangeData} labels={labels} />
           </Grid.Column>
           <Grid.Column>
-            <OpenInterestChart
-              exchangeData={exchangeData}
-              options={options}
-              labels={labels}
-            />
+            <OpenInterestChart exchangeData={exchangeData} labels={labels} />
+            {/* <BarChart /> */}
           </Grid.Column>
         </Grid.Row>
       </Grid>
-      <Table unstackable>
-        <Table.Header>
-          <Table.Row>
-            <Table.HeaderCell>#</Table.HeaderCell>
-            <Table.HeaderCell>Symbol</Table.HeaderCell>
-            <Table.HeaderCell>Asset</Table.HeaderCell>
-            <Table.HeaderCell>Price</Table.HeaderCell>
-            <Table.HeaderCell>Market Cap</Table.HeaderCell>
-            <Table.HeaderCell>24h High</Table.HeaderCell>
-            <Table.HeaderCell>24h Low</Table.HeaderCell>
-            <Table.HeaderCell>24h % Change</Table.HeaderCell>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>{marketDataRowContent}</Table.Body>
-      </Table>
+      <StyledTable celled inverted selectable>
+        <StyledTable.Header>
+          <StyledTable.Row>
+            <StyledTable.HeaderCell>#</StyledTable.HeaderCell>
+            <StyledTable.HeaderCell>Symbol</StyledTable.HeaderCell>
+            <StyledTable.HeaderCell>Asset</StyledTable.HeaderCell>
+            <StyledTable.HeaderCell>Price</StyledTable.HeaderCell>
+            <StyledTable.HeaderCell>Market Cap</StyledTable.HeaderCell>
+            <StyledTable.HeaderCell>24h High</StyledTable.HeaderCell>
+            <StyledTable.HeaderCell>24h Low</StyledTable.HeaderCell>
+            <StyledTable.HeaderCell>24h % Change</StyledTable.HeaderCell>
+          </StyledTable.Row>
+        </StyledTable.Header>
+        <StyledTable.Body>{marketDataRowContent}</StyledTable.Body>
+      </StyledTable>
     </div>
   );
 };
