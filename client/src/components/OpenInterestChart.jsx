@@ -4,7 +4,7 @@ import { Bar } from "react-chartjs-2";
 
 const OpenInterestChart = ({ exchangeData }) => {
   const openInterest = exchangeData.map(
-    ({ open_interest_btc }) => open_interest_btc
+    ({ open_interest_dollar }) => open_interest_dollar
   );
 
   const labels = exchangeData.map(({ name }) => name);
